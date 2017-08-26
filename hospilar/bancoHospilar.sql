@@ -1,1 +1,1 @@
-alter table cadastro add tiposanguineo varchar() 
+alter table cadastro add tiposanguineo varchar(50)
