@@ -138,31 +138,35 @@ public class View extends JFrame {
 		
 		textField = new JTextField();
 		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("CPF");
 		GroupLayout gl_painelRegistros = new GroupLayout(painelRegistros);
 		gl_painelRegistros.setHorizontalGroup(
 			gl_painelRegistros.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painelRegistros.createSequentialGroup()
 					.addGap(3)
 					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNome)
-						.addComponent(lblNewLabel))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_painelRegistros.createSequentialGroup()
-							.addGap(10)
-							.addComponent(textField))
-						.addGroup(gl_painelRegistros.createSequentialGroup()
-							.addComponent(txtIdade, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblNewLabel_1)
+							.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNome)
+								.addComponent(lblNewLabel))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGroup(gl_painelRegistros.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(textField, Alignment.LEADING)
+										.addComponent(txtIdade, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(lblNewLabel_1)
+									.addGap(18)
+									.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 							.addGap(18)
-							.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(rdbtnMasculino)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(rdbtnFeminino)
-					.addContainerGap(28, Short.MAX_VALUE))
+							.addComponent(rdbtnMasculino)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(rdbtnFeminino))
+						.addComponent(lblNewLabel_2))
+					.addContainerGap(70, Short.MAX_VALUE))
 		);
 		gl_painelRegistros.setVerticalGroup(
 			gl_painelRegistros.createParallelGroup(Alignment.LEADING)
@@ -179,8 +183,10 @@ public class View extends JFrame {
 						.addComponent(txtIdade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_1))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_2)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(19, Short.MAX_VALUE))
 		);
 		painelRegistros.setLayout(gl_painelRegistros);
