@@ -1,1 +1,1 @@
-alter table cadastro add tiposanguineo varchar(50)
+select *from cadastropaciente
