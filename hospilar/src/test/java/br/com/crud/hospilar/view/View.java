@@ -2,6 +2,7 @@ package br.com.crud.hospilar.view;
 
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,9 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.crud.hospilar.banco.ConexaoBanco;
 import net.proteanit.sql.DbUtils;
+import javax.swing.JFormattedTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class View extends JFrame {
 
@@ -35,7 +39,6 @@ public class View extends JFrame {
 	private JTextField txtSangue;
 	private JTable table;
 	private JTextField txtSexo;
-	private JTextField txtCPF;
 	private JTextField txtEND;
 	private JTextField txtEMAIL;
 	private JTextField txtSintomas;
@@ -59,6 +62,7 @@ public class View extends JFrame {
 	
 	Connection con=null;
 	private JTextField txtID;
+	private JTextField txtCPF;
 	
 	
 
@@ -208,9 +212,6 @@ public class View extends JFrame {
 		
 		JLabel lblCpf = new JLabel("CPF");
 		
-		txtCPF = new JTextField();
-		txtCPF.setColumns(10);
-		
 		JLabel lblEndereo = new JLabel("Endereço");
 		
 		txtEND = new JTextField();
@@ -230,6 +231,11 @@ public class View extends JFrame {
 		txtID.setColumns(10);
 		
 		JLabel lblId = new JLabel("ID");
+		
+		txtCPF = new JTextField();
+		txtCPF.setColumns(10);
+		
+		
 		GroupLayout gl_painelRegistros = new GroupLayout(painelRegistros);
 		gl_painelRegistros.setHorizontalGroup(
 			gl_painelRegistros.createParallelGroup(Alignment.LEADING)
@@ -252,11 +258,11 @@ public class View extends JFrame {
 									.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_painelRegistros.createSequentialGroup()
 									.addComponent(lblSexo)
-									.addGap(4)
+									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(txtSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(10)
 									.addComponent(lblCpf)
-									.addGap(4)
+									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(10)
 									.addComponent(lblEndereo)
@@ -298,25 +304,30 @@ public class View extends JFrame {
 							.addGap(3)
 							.addComponent(lblNewLabel_1))
 						.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
 					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_painelRegistros.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblSexo))
-						.addComponent(txtSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblSexo))
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addGroup(gl_painelRegistros.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblCpf)
+										.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblEndereo))
+								.addComponent(txtEND, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblEmail))
+								.addComponent(txtEMAIL, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_painelRegistros.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblCpf))
-						.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_painelRegistros.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblEndereo))
-						.addComponent(txtEND, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_painelRegistros.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblEmail))
-						.addComponent(txtEMAIL, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
+							.addGap(12)
+							.addComponent(txtSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(13)
 					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_painelRegistros.createSequentialGroup()
 							.addGap(3)
@@ -331,6 +342,48 @@ public class View extends JFrame {
 		scrollPane_1.setViewportView(tabelaBanco);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			
+			
+			public void mouseClicked(MouseEvent arg0) {
+				
+				
+					try {
+					
+					int row =table.getSelectedRow();
+					
+					String ID = (table.getModel().getValueAt(row, 0)).toString();
+					
+					String query="select * from cadastropaciente where id='"+ID+"' ";
+					
+					PreparedStatement stmt=con.prepareStatement(query);
+					
+					ResultSet rs=stmt.executeQuery();
+					
+					while(rs.next()){
+						txtID.setText(rs.getString("id"));
+						txtNome.setText(rs.getString("nome"));
+						txtIdade.setText(rs.getString("idade"));
+						txtSangue.setText(rs.getString("tsanguineo"));
+						txtSexo.setText(rs.getString("sexo"));
+						txtCPF.setText(rs.getString("cpf"));
+						txtEND.setText(rs.getString("endereco"));
+						txtEMAIL.setText(rs.getString("email"));
+						txtSintomas.setText(rs.getString("sintomas"));
+						
+					}
+					
+					
+					rs.close();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+			}
+		});
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},

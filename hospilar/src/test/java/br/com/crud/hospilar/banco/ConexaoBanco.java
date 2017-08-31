@@ -13,16 +13,14 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class  ConexaoBanco {
 	
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String USER = "root";
-	private static final String PASS = "root";
+	
 	
 	Connection con=null;
 	 
 	 public static Connection abrirConexao() throws ClassNotFoundException {
 		
 		 try {
-			Class.forName(DRIVER);
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cadastropaciente","root","root");
 			
 			return con;
