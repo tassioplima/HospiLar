@@ -6,14 +6,15 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="br/com/crud/hospilar/AppTest.java" kind="src" output="target/test-classes" path="src/test/java">
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="main/java/|test/java/" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry including="mysql-connector-java-5.1.18.jar" kind="src" path="Resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -23,6 +24,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/test/java/br/com/crud/hospilar/mysql-connector-java-5.1.18.jar"/>
+	<classpathentry kind="lib" path="Resources/rs2xml.jar"/>
+	<classpathentry kind="lib" path="Resources/mysql-connector-java-5.1.18.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

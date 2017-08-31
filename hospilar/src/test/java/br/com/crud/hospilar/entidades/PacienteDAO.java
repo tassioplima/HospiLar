@@ -8,8 +8,11 @@ import javax.swing.JOptionPane;
 import br.com.crud.hospilar.banco.ConexaoBanco;
 
 public class PacienteDAO {
-
-	public void salvar(Paciente p) throws SQLException {
+	
+Connection con=null;
+	
+	
+	public void salvar(Paciente p) throws SQLException, ClassNotFoundException {
 
 		Connection con = ConexaoBanco.abrirConexao();
 		java.sql.PreparedStatement stmt = null;

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import com.mysql.jdbc.PreparedStatement;
 
 
@@ -12,21 +14,23 @@ import com.mysql.jdbc.PreparedStatement;
 public class  ConexaoBanco {
 	
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql:localhost:3306/cadastropaciente";
 	private static final String USER = "root";
 	private static final String PASS = "root";
+	
+	Connection con=null;
 	 
-	 public static Connection abrirConexao() throws SQLException{
+	 public static Connection abrirConexao() throws ClassNotFoundException {
 		
 		 try {
 			Class.forName(DRIVER);
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cadastropaciente","root","root");
 			
-			return DriverManager.getConnection(URL, USER, PASS);
-			
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("Erro na conexao: ", e);
-		} 
+			return con;
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e);
+			return  null;
+		}
+		
 		
 		
 	 }

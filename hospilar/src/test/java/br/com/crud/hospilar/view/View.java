@@ -1,27 +1,31 @@
 package br.com.crud.hospilar.view;
 
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.Toolkit;
-import javax.swing.JScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import br.com.crud.hospilar.banco.ConexaoBanco;
+import net.proteanit.sql.DbUtils;
 
 public class View extends JFrame {
 
@@ -51,22 +55,34 @@ public class View extends JFrame {
 			}
 		});
 	}
+	
+	
+	Connection con=null;
+	
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public View() {
+		
+		try {
+			con = ConexaoBanco.abrirConexao();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\tassi\\git\\HospiLar\\hospilar\\hospital.png"));
 		setTitle("Hospilar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 592, 368);
+		setBounds(100, 100, 622, 406);
 		getContentPane = new JPanel();
 		getContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(getContentPane);
 		getContentPane.setLayout(null);
 		
 		JPanel painelBotoes = new JPanel();
-		painelBotoes.setBounds(0, 0, 576, 90);
+		painelBotoes.setBounds(0, 0, 596, 90);
 		getContentPane.add(painelBotoes);
 		
 		JButton btnRegistrar = new JButton("Registrar");
@@ -91,36 +107,62 @@ public class View extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		JButton btnCarregar = new JButton("Carregar");
+		btnCarregar.addActionListener(new ActionListener() {
+			
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					
+					String query="select * from cadastropaciente";
+					PreparedStatement stmt=con.prepareStatement(query);
+					ResultSet rs=stmt.executeQuery();
+					
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		GroupLayout gl_painelBotoes = new GroupLayout(painelBotoes);
 		gl_painelBotoes.setHorizontalGroup(
 			gl_painelBotoes.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painelBotoes.createSequentialGroup()
-					.addGap(51)
+					.addGap(36)
 					.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
+					.addGap(18)
 					.addComponent(btnConsultar, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
+					.addGap(18)
 					.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
+					.addGap(18)
 					.addComponent(btnDeletar, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(50, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnCarregar, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(33, Short.MAX_VALUE))
 		);
 		gl_painelBotoes.setVerticalGroup(
-			gl_painelBotoes.createParallelGroup(Alignment.LEADING)
+			gl_painelBotoes.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_painelBotoes.createSequentialGroup()
-					.addGap(26)
+					.addContainerGap(27, Short.MAX_VALUE)
 					.addGroup(gl_painelBotoes.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnConsultar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnDeletar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(26, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, gl_painelBotoes.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnConsultar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_painelBotoes.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnDeletar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnCarregar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)))
+					.addGap(25))
 		);
-		gl_painelBotoes.linkSize(SwingConstants.VERTICAL, new Component[] {btnRegistrar, btnConsultar, btnAlterar, btnDeletar});
+		gl_painelBotoes.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnRegistrar, btnConsultar, btnAlterar, btnDeletar, btnCarregar});
 		painelBotoes.setLayout(gl_painelBotoes);
 		
 		JPanel painelRegistros = new JPanel();
-		painelRegistros.setBounds(0, 89, 576, 102);
+		painelRegistros.setBounds(0, 89, 596, 102);
 		getContentPane.add(painelRegistros);
 		
 		txtNome = new JTextField();
@@ -231,9 +273,12 @@ public class View extends JFrame {
 		);
 		painelRegistros.setLayout(gl_painelRegistros);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 192, 576, 118);
-		getContentPane.add(scrollPane);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(0, 192, 596, 164);
+		getContentPane.add(scrollPane_1);
+		
+		JScrollPane tabelaBanco = new JScrollPane();
+		scrollPane_1.setViewportView(tabelaBanco);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -243,6 +288,6 @@ public class View extends JFrame {
 				"ID", "Nome", "Idade", "Tipo Sanguineo", "Sexo", "CPF", "Endere\u00E7o", "E-mail", "Sintomas"
 			}
 		));
-		scrollPane.setViewportView(table);
+		tabelaBanco.setViewportView(table);
 	}
 }
