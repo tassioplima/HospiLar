@@ -1,14 +1,11 @@
 package br.com.crud.hospilar.view;
 
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -40,6 +37,26 @@ public class View extends JFrame {
 	private JTextField txtEND;
 	private JTextField txtEMAIL;
 	private JTextField txtSintomas;
+	
+	public void atualizarTabela(){
+		
+		try {
+
+			String query = "select * from cadastropaciente.cadastropaciente";
+			PreparedStatement stmt = con.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+
+			table.setModel(DbUtils.resultSetToTableModel(rs));
+
+			stmt.close();
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+	}
 
 	/**
 	 * Launch the application.
@@ -69,7 +86,7 @@ public class View extends JFrame {
 		try {
 			con = ConexaoBanco.abrirConexao();
 		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\tassi\\git\\HospiLar\\hospilar\\hospital.png"));
@@ -111,6 +128,8 @@ public class View extends JFrame {
 				} catch (Exception ei) {
 					ei.printStackTrace();
 				}
+				
+				atualizarTabela();
 			}
 		});
 
@@ -137,6 +156,8 @@ public class View extends JFrame {
 				} catch (Exception ei) {
 					ei.printStackTrace();
 				}
+				
+				atualizarTabela();
 
 			}
 		});
@@ -164,6 +185,8 @@ public class View extends JFrame {
 				} catch (Exception e3) {
 					e3.printStackTrace();
 				}
+				
+				atualizarTabela();
 
 			}
 		});
@@ -266,107 +289,103 @@ public class View extends JFrame {
 		txtCPF.setColumns(10);
 
 		GroupLayout gl_painelRegistros = new GroupLayout(painelRegistros);
-		gl_painelRegistros
-				.setHorizontalGroup(
-						gl_painelRegistros.createParallelGroup(Alignment.LEADING).addGroup(gl_painelRegistros
-								.createSequentialGroup().addGroup(gl_painelRegistros
-										.createParallelGroup(Alignment.LEADING).addGroup(
-												gl_painelRegistros.createSequentialGroup()
-														.addGap(17).addGroup(gl_painelRegistros
-																.createParallelGroup(Alignment.LEADING)
-																.addGroup(gl_painelRegistros.createSequentialGroup()
-																		.addComponent(lblNome).addGap(4)
-																		.addComponent(txtNome,
-																				GroupLayout.PREFERRED_SIZE, 247,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(10).addComponent(lblNewLabel).addGap(18)
-																		.addComponent(txtIdade,
-																				GroupLayout.PREFERRED_SIZE, 45,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(4).addComponent(lblNewLabel_1).addGap(4)
-																		.addComponent(txtSangue,
-																				GroupLayout.PREFERRED_SIZE, 38,
-																				GroupLayout.PREFERRED_SIZE))
-																.addGroup(gl_painelRegistros.createSequentialGroup()
-																		.addComponent(lblSexo)
-																		.addPreferredGap(ComponentPlacement.RELATED)
-																		.addComponent(txtSexo,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(10).addComponent(lblCpf)
-																		.addPreferredGap(ComponentPlacement.RELATED)
-																		.addComponent(txtCPF,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(10).addComponent(lblEndereo).addGap(4)
-																		.addComponent(txtEND,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(4).addComponent(lblEmail).addGap(10)
-																		.addComponent(txtEMAIL,
-																				GroupLayout.PREFERRED_SIZE, 122,
-																				GroupLayout.PREFERRED_SIZE))
-																.addGroup(gl_painelRegistros.createSequentialGroup()
-																		.addComponent(lblSintomas).addGap(4)
-																		.addComponent(txtSintomas,
-																				GroupLayout.PREFERRED_SIZE, 495,
-																				GroupLayout.PREFERRED_SIZE))))
-										.addGroup(gl_painelRegistros.createSequentialGroup().addContainerGap()
-												.addComponent(lblId).addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(txtID, GroupLayout.PREFERRED_SIZE, 29,
-														GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap(115, Short.MAX_VALUE)));
-		gl_painelRegistros
-				.setVerticalGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING).addGroup(gl_painelRegistros
-						.createSequentialGroup().addContainerGap().addGroup(
-								gl_painelRegistros
-										.createParallelGroup(Alignment.BASELINE).addComponent(txtID,
-												GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblId))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_painelRegistros.createSequentialGroup().addGap(3).addComponent(lblNome))
-								.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGroup(
-										gl_painelRegistros.createSequentialGroup().addGap(3).addComponent(lblNewLabel))
-								.addComponent(txtIdade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_painelRegistros.createSequentialGroup().addGap(3)
-										.addComponent(lblNewLabel_1))
-								.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING).addGroup(gl_painelRegistros
-								.createSequentialGroup().addGap(11)
-								.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_painelRegistros.createSequentialGroup().addGap(3)
-												.addComponent(lblSexo))
-										.addGroup(gl_painelRegistros.createSequentialGroup().addGap(3)
-												.addGroup(gl_painelRegistros.createParallelGroup(Alignment.BASELINE)
-														.addComponent(lblCpf).addComponent(txtCPF,
-																GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)))
-										.addGroup(gl_painelRegistros.createSequentialGroup().addGap(3)
-												.addComponent(lblEndereo))
-										.addComponent(txtEND, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(gl_painelRegistros.createSequentialGroup().addGap(3)
-												.addComponent(lblEmail))
-										.addComponent(txtEMAIL, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_painelRegistros.createSequentialGroup().addGap(12).addComponent(txtSexo,
-										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)))
-						.addGap(13)
-						.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
-								.addGroup(
-										gl_painelRegistros.createSequentialGroup().addGap(3).addComponent(lblSintomas))
-								.addComponent(txtSintomas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))));
+		gl_painelRegistros.setHorizontalGroup(
+			gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelRegistros.createSequentialGroup()
+					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(17)
+							.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addComponent(lblNome)
+									.addGap(4)
+									.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+									.addGap(10)
+									.addComponent(lblNewLabel)
+									.addGap(18)
+									.addComponent(txtIdade, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+									.addGap(4)
+									.addComponent(lblNewLabel_1)
+									.addGap(4)
+									.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addComponent(lblSexo)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(10)
+									.addComponent(lblCpf)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(10)
+									.addComponent(lblEndereo)
+									.addGap(4)
+									.addComponent(txtEND, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(4)
+									.addComponent(lblEmail)
+									.addGap(10)
+									.addComponent(txtEMAIL, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addComponent(lblSintomas)
+									.addGap(4)
+									.addComponent(txtSintomas, GroupLayout.PREFERRED_SIZE, 495, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(18)
+							.addComponent(lblId)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(txtID, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(115, Short.MAX_VALUE))
+		);
+		gl_painelRegistros.setVerticalGroup(
+			gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelRegistros.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblId))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblNome))
+						.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblNewLabel))
+						.addComponent(txtIdade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblNewLabel_1))
+						.addComponent(txtSangue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(11)
+							.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblSexo))
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addGroup(gl_painelRegistros.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblCpf)
+										.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblEndereo))
+								.addComponent(txtEND, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_painelRegistros.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblEmail))
+								.addComponent(txtEMAIL, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(12)
+							.addComponent(txtSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(13)
+					.addGroup(gl_painelRegistros.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_painelRegistros.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblSintomas))
+						.addComponent(txtSintomas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+		);
 		painelRegistros.setLayout(gl_painelRegistros);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
