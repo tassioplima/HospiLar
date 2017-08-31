@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import br.com.crud.hospilar.banco.ConexaoBanco;
 
 public class PacienteDAO {
@@ -20,6 +22,7 @@ Connection con=null;
 		try {
 			stmt = con.prepareStatement(
 					"INSERT INTO cadastropaciente (nome, idade, tsanguineo, sexo, cpf, endereco, email, sintomas) VALUES(?,?,?,?,?,?,?,?,?) ");
+			
 			stmt.setString(1, p.getNome() );
 			stmt.setInt(2, p.getIdade());
 			stmt.setString(1, p.getTsanguineo());
