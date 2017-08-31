@@ -21,13 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.crud.hospilar.banco.ConexaoBanco;
 import net.proteanit.sql.DbUtils;
-import javax.swing.JFormattedTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -145,7 +143,28 @@ public class View extends JFrame {
 
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
+
+				int action = JOptionPane.showConfirmDialog(null, "Tem certeza em deletar o conteúdo?", "Delete",
+						JOptionPane.YES_NO_OPTION);
+				if (action == 0)
+					;
+				try {
+
+					String query = "delete from cadastropaciente where id='" + txtID.getText() + "' ";
+
+					PreparedStatement stmt = con.prepareStatement(query);
+
+					stmt.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Conteúdo deletada com sucesso");
+
+					stmt.close();
+
+				} catch (Exception e3) {
+					e3.printStackTrace();
+				}
+
 			}
 		});
 
@@ -156,7 +175,7 @@ public class View extends JFrame {
 
 				try {
 
-					String query = "select * from cadastropaciente";
+					String query = "select * from cadastropaciente.cadastropaciente";
 					PreparedStatement stmt = con.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
 
@@ -364,15 +383,10 @@ public class View extends JFrame {
 				try {
 
 					int row = table.getSelectedRow();
-
 					String ID = (table.getModel().getValueAt(row, 0)).toString();
-
 					String query = "select * from cadastropaciente where id='" + ID + "' ";
-
 					PreparedStatement stmt = con.prepareStatement(query);
-
 					ResultSet rs = stmt.executeQuery();
-
 					while (rs.next()) {
 						txtID.setText(rs.getString("id"));
 						txtNome.setText(rs.getString("nome"));
